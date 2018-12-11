@@ -88,7 +88,7 @@ public class NoticeController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return path;
+		return path; 
 	}
 
 	@RequestMapping(value = "noticeDelete", method = RequestMethod.POST)
