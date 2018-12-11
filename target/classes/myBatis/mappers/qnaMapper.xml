@@ -3,9 +3,9 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="qnaMapper">
+<mapper namespace="QnaDTOMapper">
 
-	<select id="totalCount" parameterType="pager"
+	<select id="totalCount" parameterType="Pager"
 		resultType="java.lang.Integer">
 		select count(num) from qna where
 		<choose>
@@ -16,7 +16,7 @@
 		like '%'||#{search}||'%'
 	</select>
 
-	<select id="selectList" parameterType="pager" resultType="qna">
+	<select id="selectList" parameterType="Pager" resultType="QnaDTO">
 		select * from
 		(select rownum r, n.* from
 		(select * from qna where
@@ -30,17 +30,17 @@
 	</select>
 
 	<select id="selectOne" parameterType="java.lang.Integer"
-		resultType="qna">
+		resultType="QnaDTO">
 		select * from qna where num = #{num}
 	</select>
 
-	<insert id="insert" parameterType="qna">
+	<insert id="insert" parameterType="QnaDTO">
 		insert into qna
 		values(qna_seq.nextval,#{title}, #{writer},
 		#{contents}, sysdate, 0,qna_seq.currval, 0, 0)
 	</insert>
 
-	<update id="update" parameterType="qna">
+	<update id="update" parameterType="QnaDTO">
 		update qna set title=#{title}, contents = #{contents} where num = #{num}
 	</update>
 
@@ -48,12 +48,12 @@
 		delete qna where num = #{num}
 	</delete>
 
-	<insert id="reply" parameterType="qna">
+	<insert id="reply" parameterType="QnaDTO">
 		insert into qna
 		values(qna_seq.nextval,#{title}, #{writer}, #{contents}, sysdate, 0, #{ref}, #{step}+1, #{depth}+1)
 	</insert>
 	
-	<update id="replyUpdate" parameterType="qna">
+	<update id="replyUpdate" parameterType="QnaDTO">
 		update qna set step = step+1 where step > #{step} and ref = #{ref}
 	</update>
 </mapper>
